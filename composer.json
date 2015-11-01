@@ -1,0 +1,16 @@
+{
+  "name": "mpower/product-block-form-key-fix",
+  "type": "magento-module",
+  "license": "MIT",
+  "description": "Add form key to cache key information of new products lists",
+  "homepage": "https://github.com/p-makowski/product-block-form-key-fix",
+  "authors": [
+    {
+      "name": "Patryk Makowski",
+      "email": "makowski.pat+mppbfkf@gmail.com"
+    }
+  ],
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*"
+  }
+}
