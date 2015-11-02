@@ -30,7 +30,7 @@
 <config>
     <modules>
         <MPower_ProductBlockFormKey>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </MPower_ProductBlockFormKey>
     </modules>
 
