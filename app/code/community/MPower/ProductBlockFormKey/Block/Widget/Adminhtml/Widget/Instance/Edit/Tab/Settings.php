@@ -35,10 +35,24 @@ class MPower_ProductBlockFormKey_Block_Widget_Adminhtml_Widget_Instance_Edit_Tab
     extends Mage_Widget_Block_Adminhtml_Widget_Instance_Edit_Tab_Settings
 {
     /** @var string */
-    protected $_overwrittenBlockAlias = 'catalog/product_widget_new';
+    protected $_overwrittenBlockAlias   = 'catalog/product_widget_new';
     /** @var string */
-    protected $_newBlockAlias         = 'mpower_productblockformkey/product_widget_new';
+    protected $_newBlockAlias           = 'mpower_productblockformkey/product_widget_new';
 
+    /** @var MPower_ProductBlockFormKey_Helper_Dispatcher */
+    protected $_helperDispatcher        = null;
+
+    /**
+     * @return MPower_ProductBlockFormKey_Helper_Dispatcher
+     */
+    protected function _getDispatcherHelper()
+    {
+        if (is_null($this->_helperDispatcher)) {
+            $this->_helperDispatcher = Mage::helper('mpower_productblockformkey/dispatcher');
+        }
+
+        return $this->_helperDispatcher;
+    }
 
     /**
      * Retrieve array (widget_type => widget_name) of available widgets
@@ -52,6 +66,10 @@ class MPower_ProductBlockFormKey_Block_Widget_Adminhtml_Widget_Instance_Edit_Tab
     {
         $widgets = parent::getTypesOptionsArray();
 
+        $widgets = $this->_getDispatcherHelper()->dispatchEvent(
+            'adminhtml_widget_instance_edit_tab_settings_get_type_options_array_before', $widgets, 'widgets'
+        );
+
         foreach ($widgets as &$widget) {
             /** @var string[] $widget */
             if (is_array($widget) && array_key_exists('value', $widget) && $widget['value'] == $this->_overwrittenBlockAlias) {
@@ -60,6 +78,10 @@ class MPower_ProductBlockFormKey_Block_Widget_Adminhtml_Widget_Instance_Edit_Tab
                 break;
             }
         }
+
+        $widgets = $this->_getDispatcherHelper()->dispatchEvent(
+            'adminhtml_widget_instance_edit_tab_settings_get_type_options_array_after', $widgets, 'widgets'
+        );
 
         return $widgets;
     }

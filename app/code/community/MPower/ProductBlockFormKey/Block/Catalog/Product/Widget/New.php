@@ -35,6 +35,21 @@
  */
 class MPower_ProductBlockFormKey_Block_Catalog_Product_Widget_New extends Mage_Catalog_Block_Product_Widget_New
 {
+    /** @var MPower_ProductBlockFormKey_Helper_Dispatcher */
+    protected $_helperDispatcher = null;
+
+    /**
+     * @return MPower_ProductBlockFormKey_Helper_Dispatcher
+     */
+    protected function _getDispatcherHelper()
+    {
+        if (is_null($this->_helperDispatcher)) {
+            $this->_helperDispatcher = Mage::helper('mpower_productblockformkey/dispatcher');
+        }
+
+        return $this->_helperDispatcher;
+    }
+
     /**
      * Returns array that uniquely identifies this product list in cache storage
      *
@@ -46,7 +61,9 @@ class MPower_ProductBlockFormKey_Block_Catalog_Product_Widget_New extends Mage_C
         /* get Magento's standard cache key info */
         $cacheKeyInfo = parent::getCacheKeyInfo();
 
-        return $this->_dispatchEvents('get_cache_key_info', $cacheKeyInfo, 'cache_key_info');
+        return $this->_getDispatcherHelper()->dispatchEvent(
+            'catalog_product_widget_new_get_cache_key_info', $cacheKeyInfo, 'cache_key_info'
+        );
     }
 
     /**
@@ -59,7 +76,9 @@ class MPower_ProductBlockFormKey_Block_Catalog_Product_Widget_New extends Mage_C
         /* get Magento's standard cache key info */
         $cacheKeyLifetime = parent::getCacheLifetime();
 
-        return $this->_dispatchEvents('get_cache_lifetime', $cacheKeyLifetime, 'cache_lifetime');
+        return $this->_getDispatcherHelper()->dispatchEvent(
+            'catalog_product_widget_new_get_cache_lifetime', $cacheKeyLifetime, 'cache_lifetime'
+        );
     }
 
     /**
@@ -72,26 +91,10 @@ class MPower_ProductBlockFormKey_Block_Catalog_Product_Widget_New extends Mage_C
         /* get Magento's standard cache key info */
         $cacheTags = parent::getCacheTags();
 
-        return array_unique($this->_dispatchEvents('get_cache_tags', $cacheTags, 'cache_tags'));
-    }
-
-    /**
-     * Dispatch event so others can modify cache data of this block without modifying module
-     *
-     * @param        $eventNamePostfix
-     * @param        $eventData
-     * @param string $eventDataKey
-     *
-     * @return mixed
-     */
-    protected function _dispatchEvents($eventNamePostfix, &$eventData, $eventDataKey = 'cache_data')
-    {
-        Mage::dispatchEvent('mpower_productblockformkey_' . $eventNamePostfix, array($eventDataKey => &$eventData));
-        Mage::dispatchEvent(
-            'mpower_productblockformkey_catalog_product_widget_new_' . $eventNamePostfix,
-            array($eventDataKey => &$eventData)
+        return array_unique(
+            $this->_getDispatcherHelper()->dispatchEvent(
+                'catalog_product_widget_new_get_cache_tags', $cacheTags, 'cache_tags'
+            )
         );
-
-        return $eventData;
     }
 }

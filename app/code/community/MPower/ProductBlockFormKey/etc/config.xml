@@ -54,6 +54,12 @@
             </widget>
         </blocks>
 
+        <helpers>
+            <mpower_productblockformkey>
+                <class>MPower_ProductBlockFormKey_Helper</class>
+            </mpower_productblockformkey>
+        </helpers>
+
         <models>
             <mpower_productblockformkey>
                 <class>MPower_ProductBlockFormKey_Model</class>
@@ -61,14 +67,22 @@
         </models>
 
         <events>
-            <mpower_productblockformkey_get_cache_key_info>
+            <mpower_productblockformkey_catalog_product_new_get_cache_key_info>
                 <observers>
                     <mpower_productblockformkey_add_form_key_to_cache_key_info>
                         <class>mpower_productblockformkey/observer</class>
                         <method>addFormKeyToCacheKeyInfo</method>
                     </mpower_productblockformkey_add_form_key_to_cache_key_info>
                 </observers>
-            </mpower_productblockformkey_get_cache_key_info>
+            </mpower_productblockformkey_catalog_product_new_get_cache_key_info>
+            <mpower_productblockformkey_catalog_product_widget_new_get_cache_key_info>
+                <observers>
+                    <mpower_productblockformkey_add_form_key_to_cache_key_info_widget>
+                        <class>mpower_productblockformkey/observer</class>
+                        <method>addFormKeyToCacheKeyInfo</method>
+                    </mpower_productblockformkey_add_form_key_to_cache_key_info_widget>
+                </observers>
+            </mpower_productblockformkey_catalog_product_widget_new_get_cache_key_info>
         </events>
     </global>
 </config>
