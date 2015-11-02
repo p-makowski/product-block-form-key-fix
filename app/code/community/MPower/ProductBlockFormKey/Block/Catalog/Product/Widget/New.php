@@ -29,14 +29,6 @@
  */
 
 /**
- * Class St_ProductListBlockCache_Block_Catalog_Product_List
- *
- * Extends standard product list block and adds cache details to enable product list block caching
- *
- * @see Mage_Catalog_Block_Product_List
- */
-
-/**
  * Class MPower_ProductBlockFormKey_Block_Catalog_Product_Widget_New
  *
  * Extends standard new product list block with form key to allow correct caching of "add to" links
